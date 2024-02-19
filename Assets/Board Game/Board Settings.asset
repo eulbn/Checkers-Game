@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6036a558452e42b49987b9c9ad81e938, type: 3}
+  m_Name: Board Settings
+  m_EditorClassIdentifier: 
+  row: 8
+  column: 8
+  teamNames:
+  - Black
+  - Red
+  boardPiecesHolders:
+  - {fileID: 3783434020345251845, guid: 4c530ee73ad635041a0c9ad9dda1606d, type: 3}
+  - {fileID: 7704059147055472440, guid: 66f1d2a1629f45b4bb5216eb667110e7, type: 3}
+  boardPieces:
+  - {fileID: 4699983622725072661, guid: 6a5cc9e5b04e17a4ea3ac585dc6ab5d3, type: 3}
+  - {fileID: 8000807257403354873, guid: 23f76c3c15fe1ae4dbe8209cf518223c, type: 3}
+  - {fileID: 3448971432613550547, guid: 178726c2cbaff904698ada9d59b9c4ad, type: 3}
+  - {fileID: 1427579165996474081, guid: e8994a3d328482445b8ffa09b1f86c6c, type: 3}
