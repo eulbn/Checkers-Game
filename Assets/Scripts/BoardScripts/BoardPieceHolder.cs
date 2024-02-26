@@ -1,5 +1,7 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 namespace Arc
 {
@@ -88,9 +90,13 @@ namespace Arc
                 OnUpgrade();
                 BoardManager.Instance.ChangeCurrentTeam();
 
-                if (BoardManager.Instance.HasCurrentTeamLost())
+                if(GameManager.Instance.IsPlayingWithAI)
                 {
-                    UIManager.Instance.OpenFinalPopup(BoardManager.Instance.GetCurrentTeam());
+                    if (BoardManager.Instance.HasCurrentTeamLost())
+                    {
+                        UIManager.Instance.OpenFinalPopup(BoardManager.Instance.GetCurrentTeam());
+                    }
+                    BoardManager.Instance.PlayAI();
                 }
             }
             else if (!IsEmpty() && BoardManager.Instance.GetCurrentTeam() == holdingBoardPiece.PieceTeam)
@@ -257,6 +263,48 @@ namespace Arc
             }
 
             return false;
+        }
+
+        public void PlayAIMove(int moveIndex)
+        {
+            if(holdingBoardPiece != null)
+            {
+                OnClick();
+                StartCoroutine(LateAction(() =>
+                {
+                    List<BoardPiece.MovementRelativeCoordinate> movementRelativeCoordinates = holdingBoardPiece.MovementRelativeCoordinates;
+                    if (moveIndex < movementRelativeCoordinates.Count)
+                    {
+                        Vector2Int coords = movementRelativeCoordinates[moveIndex].coordinate;
+                        int relativeXIndex = xIndex + coords.x;
+                        int relativeYIndex = yIndex + coords.y;
+                        BoardPieceHolder relativeBoardPieceHolder = BoardManager.Instance.GetBoardPieceHolderAtIndex(relativeXIndex, relativeYIndex);
+                        if (relativeBoardPieceHolder.holdingBoardPiece == null)
+                        {
+                            relativeBoardPieceHolder.OnClick();
+                        }
+                        else
+                        {
+                            relativeXIndex = xIndex + coords.x + coords.x;
+                            relativeYIndex = yIndex + coords.y + coords.y;
+                            relativeBoardPieceHolder = BoardManager.Instance.GetBoardPieceHolderAtIndex(relativeXIndex, relativeYIndex);
+
+                            if (relativeBoardPieceHolder.holdingBoardPiece == null)
+                            {
+                                relativeBoardPieceHolder.OnClick();
+                            }
+                        }
+                    }
+                    GameManager.Instance.IsAIPlaying = false;
+                }, 1));
+            }
+        }
+
+
+        IEnumerator LateAction(System.Action aciton, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            aciton();
         }
     }
 }

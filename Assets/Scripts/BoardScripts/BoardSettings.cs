@@ -10,11 +10,11 @@ namespace Arc
     {
         [Header("---Board Parameters---")]
         [SerializeField] private int row;
-        public int Row => row;
+        public int Rows => row;
 
 
         [SerializeField] private int column;
-        public int Column => column;
+        public int Columns => column;
 
 
         [SerializeField] private List<string> teamNames;

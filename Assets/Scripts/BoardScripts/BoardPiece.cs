@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,9 @@ namespace Arc
         [SerializeField] List<MovementRelativeCoordinate> movementRelativeCoordinates;
         public List<MovementRelativeCoordinate> MovementRelativeCoordinates => movementRelativeCoordinates;
 
+
+        [SerializeField] private int score;
+        public int Score => score;
     }
 }
 

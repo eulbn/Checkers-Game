@@ -50,6 +50,7 @@ MonoBehaviour:
   movementRelativeCoordinates:
   - coordinate: {x: 1, y: 1}
   - coordinate: {x: -1, y: 1}
+  score: 1
 --- !u!1 &4699983624534468736
 GameObject:
   m_ObjectHideFlags: 0

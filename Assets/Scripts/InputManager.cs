@@ -15,7 +15,7 @@ namespace Arc
 
         void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && GameManager.Instance.IsAIPlaying == false)
             {
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit2D hit = Physics2D.GetRayIntersection(ray);

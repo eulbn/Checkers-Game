@@ -7,7 +7,6 @@ namespace Arc
 {
     public class BoardManager : Singleton<BoardManager>
     {
-
         [SerializeField] Board board;
         private List<List<BoardPieceHolder>> grid;
         public Vector2 cellSize = Vector3.one;
@@ -18,9 +17,14 @@ namespace Arc
 
         private int currentTeamIndex = 0;
 
-        private void Start()
+
+        public void Intialize()
         {
-            Initialize();
+            Setup();
+            if(GameManager.Instance.IsPlayingWithAI)
+            {
+                AIManager.Instance.Intialize(board.GetNumberOfRows(), board.GetNumberOfColumns(), board.GetAllBoardPieces(), GetTheOtherTeam(), 7);
+            }
         }
 
         private void Update()
@@ -29,10 +33,14 @@ namespace Arc
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+            /*else if(Input.GetKeyDown(KeyCode.K))
+            {
+                AIManager.Instance.Play(grid);
+            }*/
         }
 
 
-        public void Initialize()
+        public void Setup()
         {
             if (board == null)
             {
@@ -118,10 +126,19 @@ namespace Arc
             return board.GetBoardPiece(pieceType, pieceTeam);
         }
 
+        public List<BoardPiece> GetAllBoardPieces()
+        {
+            return board.GetAllBoardPieces();
+        }
 
         public string GetCurrentTeam()
         {
             return board.Teams[currentTeamIndex];
+        }
+
+        public string GetTheOtherTeam()
+        {
+            return board.Teams[board.Teams.Count - 1];
         }
 
         public void ChangeCurrentTeam()
@@ -152,6 +169,34 @@ namespace Arc
             }
 
             return true;
+        }
+
+
+        public void PlayAI()
+        {
+            GameManager.Instance.IsAIPlaying = true;
+            StartCoroutine(PlayingAI());
+        }
+
+        IEnumerator PlayingAI()
+        {
+            yield return new WaitForSeconds(0.01f);
+            if (AIManager.Instance.TeamNameAI == GetCurrentTeam())
+            {
+                AIManager.Instance.Play(grid);
+            }
+        }
+
+        public void PlayMove(int xIndex, int yIndex, int moveIndex)
+        {
+            if (yIndex >= 0 && yIndex < grid.Count
+               && xIndex >= 0 && xIndex < grid[yIndex].Count)
+            {
+                if (grid[yIndex][xIndex] != null)
+                {
+                    grid[yIndex][xIndex].PlayAIMove(moveIndex);
+                }
+            }
         }
     }
 }

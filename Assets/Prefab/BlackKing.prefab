@@ -136,3 +136,4 @@ MonoBehaviour:
   - coordinate: {x: -1, y: 1}
   - coordinate: {x: 1, y: -1}
   - coordinate: {x: -1, y: -1}
+  score: 2

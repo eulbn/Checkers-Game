@@ -56,6 +56,28 @@ namespace Arc
             return boardSettings.BoardPieces.Find((x) => x.PieceType == pieceType && x.PieceTeam == pieceTeam);
         }
 
+        public List<BoardPiece> GetAllBoardPieces()
+        {
+            return boardSettings.BoardPieces;
+        }
+
+        public int GetNumberOfRows()
+        {
+            if(boardSettings != null)
+            {
+                return boardSettings.Rows;
+            }
+            return 0;
+        }
+
+        public int GetNumberOfColumns()
+        {
+            if (boardSettings != null)
+            {
+                return boardSettings.Columns;
+            }
+            return 0;
+        }
     }
 
 #if UNITY_EDITOR
